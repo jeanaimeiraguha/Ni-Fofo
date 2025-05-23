@@ -1,55 +1,46 @@
 import React from 'react';
 
 const Home = () => {
-  const cardStyle = {
-    width: '280px',
-    padding: '1.5rem',
-    borderRadius: '16px',
-    boxShadow: '0 6px 18px rgba(0, 0, 0, 0.1)',
-    color: 'white',
-    transition: 'transform 0.2s ease-in-out',
-    textAlign: 'center',
-  };
-
-  const containerStyle = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: '24px',
-    marginTop: '2rem',
-  };
-
   return (
-    <div style={{ color: '#2c3e50', padding: '3rem 1rem', fontFamily: 'Segoe UI, sans-serif' }}>
-      <h1 style={{ fontWeight: '800', textAlign: 'center', marginBottom: '1rem' }}>
-        🚗 Parking Manager Dashboard
-      </h1>
-      <p style={{ fontSize: '1.2rem', textAlign: 'center', color: '#555' }}>
-        Manage your parking spaces, vehicles, and payments efficiently.
+    <div className="text-center px-4 py-5" style={{ color: '#2c3e50' }}>
+      <h1 className="mb-3 fw-bold display-5 text-primary">Welcome to Parking Manager</h1>
+      <p className="lead mb-5 text-muted">
+        Effortlessly manage your parking spaces, cars, and payments all in one place.
       </p>
 
-      <div style={containerStyle}>
-        <div
-          style={{
-            ...cardStyle,
-            backgroundColor: '#007bff',
-          }}
-        >
-          <i className="bi bi-car-front-fill fs-1 mb-3"></i>
-          <h4 style={{ fontWeight: '700' }}>Manage Cars</h4>
-          <p style={{ fontSize: '0.95rem' }}>
-            Easily add, view, and manage all vehicles in the system.
-          </p>
+      <div className="row justify-content-center g-4">
+        <div className="col-md-4">
+          <div className="card h-100 shadow-sm border-0" style={{ backgroundColor: '#f8f9fa' }}>
+            <div className="card-body text-center">
+              <i className="bi bi-car-front-fill fs-1 text-danger mb-3"></i>
+              <h5 className="card-title">Manage Cars</h5>
+              <p className="card-text">Easily track all vehicles in your parking lot.</p>
+            </div>
+          </div>
         </div>
+        <div className="col-md-4">
+          <div className="card h-100 shadow-sm border-0" style={{ backgroundColor: '#f8f9fa' }}>
+            <div className="card-body text-center">
+              <i className="bi bi-columns-gap fs-1 text-primary mb-3"></i>
+              <h5 className="card-title">Parking Slots</h5>
+              <p className="card-text">View and manage all parking slots efficiently.</p>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100 shadow-sm border-0" style={{ backgroundColor: '#f8f9fa' }}>
+            <div className="card-body text-center">
+              <i className="bi bi-credit-card fs-1 text-warning mb-3"></i>
+              <h5 className="card-title">Payments</h5>
+              <p className="card-text">Track and manage all payments with ease.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div
-          style={{
-            ...cardStyle,
-            backgroundColor: '#28a745',
-          }}
-        >
-          <i className="bi bi-columns-gap fs-1 mb-3"></i>
-          <h4 style={{ fontWeight: '700' }}>Parking Slots</h4>
-          <p style={{ fontSize: '0.95rem' }}>
-            Monitor and organize your available and occupied slots.
-          </p>
+      <p className="mt-5 text-secondary fst-italic">Use the navigation bar above to get started.</p>
+    </div>
+  );
+};
+
+export default Home;

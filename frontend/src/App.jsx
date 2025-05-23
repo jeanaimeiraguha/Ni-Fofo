@@ -24,8 +24,8 @@ import NotFound from './NotFound';
 import Report from './Report';
 
 const navBarStyle = {
-  backgroundColor: '#2c3e50',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
+  background: 'linear-gradient(90deg, #232526, #414345)',
+  boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
 };
 
 const AppContent = () => {
@@ -33,7 +33,7 @@ const AppContent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ duration: 800, once: true });
 
     const tooltipTriggerList = [...document.querySelectorAll('[data-bs-toggle="tooltip"]')];
     tooltipTriggerList.forEach((t) => new bootstrap.Tooltip(t));
@@ -46,75 +46,58 @@ const AppContent = () => {
     navigate('/login');
   };
 
-  const linkClass = 'nav-link fs-5 px-3';
-
   const navLinks = [
-    { path: '/', label: 'Home', icon: 'bi-house-door-fill', tooltip: 'Home Dashboard' },
-    { path: '/cars', label: 'Cars', icon: 'bi-car-front-fill', tooltip: 'Cars Overview' },
-    { path: '/parking', label: 'Parking', icon: 'bi-ui-checks-grid', tooltip: 'Manage Parking' },
-    { path: '/payments', label: 'Payments', icon: 'bi-credit-card', tooltip: 'Payments' },
-    { path: '/parkingslots', label: 'Parking Slots', icon: 'bi-columns-gap', tooltip: 'Manage Parking Slots' },
-    { path: '/report', label: 'Report', icon: 'bi-bar-chart-fill', tooltip: 'Parking Report' },  // Added here
+    { path: '/', label: 'Home', icon: 'bi-house-fill', tooltip: 'Home' },
+    { path: '/cars', label: 'Cars', icon: 'bi-car-front-fill', tooltip: 'Cars' },
+    { path: '/parking', label: 'Parking', icon: 'bi-grid-3x3-gap-fill', tooltip: 'Parking' },
+    { path: '/payments', label: 'Payments', icon: 'bi-credit-card-2-front-fill', tooltip: 'Payments' },
+    { path: '/parkingslots', label: 'Slots', icon: 'bi-columns-gap', tooltip: 'Slots' },
+    { path: '/report', label: 'Report', icon: 'bi-bar-chart-fill', tooltip: 'Report' },
   ];
 
+  const activeStyle = {
+    color: '#f39c12',
+    fontWeight: 'bold',
+  };
+
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="d-flex flex-column min-vh-100" style={{ background: '#f4f6f8' }}>
       {!hideNavFooter && (
         <nav className="navbar navbar-expand-lg navbar-dark" style={navBarStyle}>
           <div className="container-fluid">
-            <Link
-              className="navbar-brand d-flex align-items-center"
-              to="/"
-              style={{ fontWeight: '700', fontSize: '1.4rem', color: '#ff6f61' }}
-            >
+            <Link className="navbar-brand d-flex align-items-center fs-4" to="/" style={{ color: '#f39c12', fontWeight: '700' }}>
               <i className="bi bi-car-front-fill me-2 fs-3"></i> Parking Manager
             </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-              style={{ borderColor: '#ff6f61' }}
-            >
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav ms-auto">
+              <ul className="navbar-nav ms-auto align-items-center">
                 {navLinks.map(({ path, label, icon, tooltip }) => (
-                  <li className="nav-item" key={path}>
+                  <li className="nav-item mx-2" key={path}>
                     <Link
                       to={path}
-                      className={linkClass + (location.pathname === path ? ' active fw-bold' : '')}
+                      className="nav-link text-white position-relative"
                       data-bs-toggle="tooltip"
-                      data-bs-placement="bottom"
                       title={tooltip}
-                      style={{
-                        color: location.pathname === path ? '#ff6f61' : 'white',
-                        textDecoration: 'none',
-                        transition: 'color 0.3s ease',
-                      }}
+                      style={location.pathname === path ? activeStyle : {}}
                     >
                       <i className={`${icon} me-1`}></i> {label}
+                      {location.pathname === path && (
+                        <div
+                          className="position-absolute bottom-0 start-50 translate-middle-x"
+                          style={{ width: '50%', height: '2px', backgroundColor: '#f39c12' }}
+                        />
+                      )}
                     </Link>
                   </li>
                 ))}
-                <li className="nav-item">
+                <li className="nav-item ms-3">
                   <button
                     onClick={handleLogout}
-                    className="nav-link btn btn-link"
+                    className="btn btn-sm btn-outline-warning"
                     data-bs-toggle="tooltip"
-                    data-bs-placement="bottom"
                     title="Logout"
-                    style={{
-                      color: '#ff6f61',
-                      textDecoration: 'none',
-                      cursor: 'pointer',
-                      fontWeight: '600',
-                      fontSize: '1.1rem',
-                    }}
                   >
                     <i className="bi bi-box-arrow-right me-1"></i> Logout
                   </button>
@@ -126,9 +109,14 @@ const AppContent = () => {
       )}
 
       <main
-        className="flex-grow-1 container my-4 p-4 bg-white rounded shadow-sm"
+        className="container my-4 p-4 rounded shadow"
         data-aos="fade-up"
-        style={{ minHeight: '70vh' }}
+        style={{
+          background: 'rgba(255, 255, 255, 0.9)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.4)',
+          minHeight: '70vh',
+        }}
       >
         <Routes>
           <Route path="/" element={<Home />} />
@@ -146,34 +134,18 @@ const AppContent = () => {
         <footer
           className="text-white text-center py-3 mt-auto"
           style={{
-            background: 'linear-gradient(90deg, #ff6f61, #f7b733)',
-            boxShadow: '0 -3px 6px rgba(0,0,0,0.3)',
+            background: 'linear-gradient(90deg, #f39c12, #e74c3c)',
+            boxShadow: '0 -3px 8px rgba(0,0,0,0.25)',
           }}
         >
           <div className="container">
-            <p className="mb-1" style={{ fontWeight: '600' }}>
-              &copy; {new Date().getFullYear()} Parking Manager
-            </p>
+            <p className="mb-1 fw-bold">&copy; {new Date().getFullYear()} Parking Manager</p>
             <p className="mb-0">
-              <a
-                href="#"
-                className="text-white me-3"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Facebook"
-                style={{ fontSize: '1.3rem' }}
-              >
-                <i className="bi bi-facebook"></i>
+              <a href="#" className="text-white mx-2" title="Facebook">
+                <i className="bi bi-facebook fs-5"></i>
               </a>
-              <a
-                href="#"
-                className="text-white"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Twitter"
-                style={{ fontSize: '1.3rem' }}
-              >
-                <i className="bi bi-twitter"></i>
+              <a href="#" className="text-white mx-2" title="Twitter">
+                <i className="bi bi-twitter fs-5"></i>
               </a>
             </p>
           </div>
